@@ -7,6 +7,13 @@
 
 #Requires -RunAsAdministrator
 
+# Verify Winget is installed
+if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+    Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile winget.msixbundle
+    Add-AppxPackage winget.msixbundle
+    Remove-Item winget.msixbundle
+}
+
 winget source update
 
 # General Apps
@@ -29,6 +36,8 @@ winget install -h --id RIA.eIDsoftware
 winget install -h --id CodecGuide.K-LiteCodecPack.Mega
 winget install -h --id Avidemux.Avidemux
 winget install -h --id JAMSoftware.TreeSize.Frees
+
+winget install -h --id Microsoft.VCRedist.2015+.x64
 winget install -h --id Deskflow.Deskflow
 
 # Gaming Apps

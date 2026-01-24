@@ -21,7 +21,7 @@ $apps = @(
     "*Microsoft.GamingApp*",
     "*Microsoft.MicrosoftSolitaireCollection*",
     "*Microsoft.MicrosoftStickyNotes*",
-    "*Microsoft.MicrosoftStickyNotes*",
+    "*Microsoft.MicrosoftOfficeHub*",
     "*Microsoft.Office.OneNote*",
     "*Microsoft.OutlookForWindows*",
     "*Microsoft.Paint*",

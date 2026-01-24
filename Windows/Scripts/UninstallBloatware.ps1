@@ -32,6 +32,8 @@ $apps = @(
     "*microsoft.windowscommunicationsapps*", # Mail & Calendar
     "*Microsoft.Xbox*",
     "*Microsoft.YourPhone*",
+    "*Microsoft.ZuneMusic*", # Media Player
+    "*Microsoft.ZuneVideo*", # Movies & TV
     "*MicrosoftTeams*",
     "*MSPaint*",
     "*MSTeams*",

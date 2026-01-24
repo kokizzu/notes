@@ -17,6 +17,7 @@ if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
 winget source update
 
 # General Apps
+winget install -h --id Microsoft.WindowsTerminal
 winget install -h --id Google.Chrome
 winget install -h --id Telegram.TelegramDesktop
 winget install -h --id Mega.MEGASync

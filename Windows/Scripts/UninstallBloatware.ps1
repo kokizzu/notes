@@ -57,3 +57,25 @@ foreach ($key in $uninstallKeys) {
         Start-Process msiexec.exe -ArgumentList "/x $($_.PSChildName) /qn" -Wait
     }
 }
+
+# Microsoft Office 365 Suite
+winget uninstall -h --id Microsoft.Office.365
+winget uninstall -h --id Microsoft.Office.Desktop
+
+# Force remove Office/Outlook (MSI & Click-To-Run Registry lookup)
+$officeKeys = @("HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall")
+foreach ($key in $officeKeys) {
+    Get-ChildItem $key -ErrorAction SilentlyContinue | Get-ItemProperty | Where-Object { $_.DisplayName -match "Microsoft Office|Microsoft 365|Outlook" } | ForEach-Object {
+        if ($_.UninstallString -match "msiexec") {
+            Write-Host "Removing MSI: $($_.DisplayName)"
+            Start-Process msiexec.exe -ArgumentList "/x $($_.PSChildName) /qn" -Wait
+        } elseif ($_.UninstallString -match "OfficeClickToRun.exe") {
+            Write-Host "Removing C2R: $($_.DisplayName)"
+            # Extract arguments and force silent display level
+            if ($_.UninstallString -match 'scenario=.*') {
+                $args = $matches[0] + " DisplayLevel=False"
+                Start-Process "C:\Program Files\Common Files\Microsoft Shared\ClickToRun\OfficeClickToRun.exe" -ArgumentList $args -Wait
+            }
+        }
+    }
+}

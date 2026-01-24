@@ -87,8 +87,8 @@ powercfg /DEVICEQUERY wake_programmable | Select-String -Pattern "mouse|keyboard
 # Set Sounds > More sounds settings > Sounds > Sound Scheme to "No Sounds"
 Set-ItemProperty -Path "HKCU:\AppEvents\Schemes" -Name "(Default)" -Value ".None" -Type String
 Get-ChildItem -Path "HKCU:\AppEvents\Schemes\Apps" -Recurse | 
-    Where-Object { $_.PSChildName -eq ".Current" } | 
-    ForEach-Object { Set-ItemProperty -Path $_.PSPath -Name "(Default)" -Value "" -Type String }
+Where-Object { $_.PSChildName -eq ".Current" } | 
+ForEach-Object { Set-ItemProperty -Path $_.PSPath -Name "(Default)" -Value "" -Type String }
 
 # Disable Accessibility > Visual effects > Transparency effects
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name EnableTransparency -Type DWord -Value 0
@@ -124,49 +124,40 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppHost"
 
 # >>> Bloatware Removal >>>
 
-# Microsoft Teams
-Get-AppxPackage -Name "MicrosoftTeams" | Remove-AppxPackage
-Get-AppxPackage -Name "MSTeams" | Remove-AppxPackage
+$apps = @(
+    "*Clipchamp.Clipchamp*",
+    "*LinkedIn*",
+    "*Microsoft.BingNews*",
+    "*Microsoft.BingWeather*",
+    "*Microsoft.GamingApp*",
+    "*Microsoft.MicrosoftSolitaireCollection*",
+    "*Microsoft.MicrosoftStickyNotes*",
+    "*Microsoft.MicrosoftStickyNotes*",
+    "*Microsoft.Office.OneNote*",
+    "*Microsoft.OutlookForWindows*",
+    "*Microsoft.Paint*",
+    "*Microsoft.Teams*",
+    "*Microsoft.Todos*",
+    "*Microsoft.Whiteboard*",
+    "*Microsoft.Windows.Photos*",
+    "*microsoft.windowscommunicationsapps*", # Mail & Calendar
+    "*Microsoft.Xbox*",
+    "*Microsoft.YourPhone*",
+    "*MicrosoftTeams*",
+    "*MSPaint*",
+    "*MSTeams*",
+    "*SkypeApp*"
+)
 
-# Microsoft To Do
-Get-AppxPackage -Name "Microsoft.Todos" | Remove-AppxPackage
-
-# Microsoft Clipchamp
-Get-AppxPackage -Name "Clipchamp.Clipchamp" | Remove-AppxPackage
+foreach ($app in $apps) {
+    Get-AppxPackage -Name $app -AllUsers | Remove-AppxPackage -ErrorAction SilentlyContinue
+    # Remove provisioned packages to prevent reinstallation for new users
+    Get-ProvisionedAppxPackage -Online | Where-Object { $_.PackageName -like $app } | ForEach-Object { Remove-ProvisionedAppxPackage -Online -AllUsers -PackageName $_.PackageName }
+}
 
 # Microsoft Copilot
 winget uninstall -h --id 9WZDNCRD29V9
 
-# News
-Get-AppxPackage -Name "Microsoft.BingNews" | Remove-AppxPackage
-
 # OneDrive
 winget uninstall -h --id Microsoft.OneDrive
 
-# Outlook (new)
-Get-AppxPackage -Name "Microsoft.OutlookForWindows" | Remove-AppxPackage
-
-# Paint
-Get-AppxPackage -Name "Microsoft.Paint" | Remove-AppxPackage
-
-# Phone Link
-Get-AppxPackage -Name "Microsoft.YourPhone" | Remove-AppxPackage
-
-# Photos
-Get-AppxPackage -Name "Microsoft.Windows.Photos" | Remove-AppxPackage
-
-# Solitaire & Casual Games
-Get-AppxPackage -Name "Microsoft.MicrosoftSolitaireCollection" | Remove-AppxPackage
-
-# Sticky Notes
-Get-AppxPackage -Name "Microsoft.MicrosoftStickyNotes" | Remove-AppxPackage
-
-# Xbox (multiple components)
-Get-AppxPackage -Name "Microsoft.GamingApp" | Remove-AppxPackage
-Get-AppxPackage -Name "Microsoft.Xbox.TCUI" | Remove-AppxPackage
-Get-AppxPackage -Name "Microsoft.XboxApp" | Remove-AppxPackage
-Get-AppxPackage -Name "Microsoft.XboxGameOverlay" | Remove-AppxPackage
-Get-AppxPackage -Name "Microsoft.XboxGamingOverlay" | Remove-AppxPackage
-Get-AppxPackage -Name "Microsoft.XboxIdentityProvider" | Remove-AppxPackage
-Get-AppxPackage -Name "Microsoft.XboxSpeechToTextOverlay" | Remove-AppxPackage
-Get-ProvisionedAppxPackage -Online | Where-Object { $_.PackageName -match "xbox" } | ForEach-Object { Remove-ProvisionedAppxPackage -Online -AllUsers -PackageName $_.PackageName }

@@ -49,3 +49,11 @@ winget uninstall -h --id 9WZDNCRD29V9
 
 # OneDrive
 winget uninstall -h --id Microsoft.OneDrive
+
+# Microsoft Teams Machine-Wide Installer
+$uninstallKeys = @("HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall")
+foreach ($key in $uninstallKeys) {
+    Get-ChildItem $key -ErrorAction SilentlyContinue | Get-ItemProperty | Where-Object { $_.DisplayName -eq "Teams Machine-Wide Installer" } | ForEach-Object {
+        Start-Process msiexec.exe -ArgumentList "/x $($_.PSChildName) /qn" -Wait
+    }
+}

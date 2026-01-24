@@ -19,6 +19,7 @@ $apps = @(
     "*Microsoft.BingNews*",
     "*Microsoft.BingWeather*",
     "*Microsoft.GamingApp*",
+    "*Microsoft.Microsoft3DViewer*",
     "*Microsoft.MicrosoftSolitaireCollection*",
     "*Microsoft.MicrosoftStickyNotes*",
     "*Microsoft.MicrosoftOfficeHub*",

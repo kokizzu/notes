@@ -67,6 +67,7 @@ winget uninstall -h --id Microsoft.Office.365
 winget uninstall -h --id Microsoft.Office.Desktop
 
 # Force remove Office/Outlook (MSI & Click-To-Run Registry lookup)
+Write-Host "Forcing removal of remaining Office/Outlook installations, the operation may take several minutes..."
 $officeKeys = @("HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall")
 foreach ($key in $officeKeys) {
     Get-ChildItem $key -ErrorAction SilentlyContinue | Get-ItemProperty | Where-Object { $_.DisplayName -match "Microsoft Office|Microsoft 365|Outlook" } | ForEach-Object {

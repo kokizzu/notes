@@ -27,6 +27,7 @@
 ^!+#d::return ; OneDrive
 ^!+#n::return ; OneNote
 ^!+#y::return ; Yammer Viva Engage
+!r::return ; Nvidia overlay
 ; ^!+#w::return ; pen settings (commented because reassigned below)
 ; ^!+#c::return ; cortana/copilot (commented because reassigned below)
 ; ^!+#g::return ; Game Bar Xbox (commented because reassigned below)

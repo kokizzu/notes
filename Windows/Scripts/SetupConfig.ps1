@@ -42,9 +42,6 @@ reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\Inpr
 # Enable "Expand to open folder" in Navigation pane
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "NavPaneExpandToCurrentFolder" -Value 1 -Type DWord
 
-# Restart Explorer to apply the above changes
-Stop-Process -Name explorer -Force
-
 # >>> Notification >>>
 
 # Disable Notifications
@@ -105,6 +102,9 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 # Disable Personalization > Start "Show recommendetions for tips, shortcuts, new apps, and more"
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Start_IrisRecommendations" -Value 0 -Type DWord
 
+# Disable file search integration in Start Menu
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Start_SearchFiles" -Value 0 -Type DWord
+
 # Enable Windows Update "Get the latest updates as soon as they're available"
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "IsContinuousInnovationOptedIn" -Value 1 -Type DWord
 
@@ -121,3 +121,6 @@ REG ADD HKCU\Software\Classes\ms-officeapp\Shell\Open\Command /t REG_SZ /d rundl
 
 # Enable Windows Security > App & browser control > Reputation-based protection
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppHost" -Name "EnableWebContentEvaluation" -Type DWord -Value 1
+
+# Restart Explorer to apply Start Menu changes
+Stop-Process -Name explorer -Force

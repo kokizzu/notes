@@ -20,7 +20,10 @@ winget source update
 winget install -h --id Microsoft.WindowsTerminal
 winget install -h --id Google.Chrome
 winget install -h --id Telegram.TelegramDesktop
-winget install -h --id Mega.MEGASync
+
+# Needs to be installed from a non-elevated PowerShell
+winget install -h --id Mega.MEGASync --ignore-security-hash
+
 winget install -h --id DominikReichl.KeePass
 winget install -h --id AutoHotkey.AutoHotkey
 winget install -h --id Microsoft.PowerShell

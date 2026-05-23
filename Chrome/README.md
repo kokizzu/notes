@@ -12,7 +12,9 @@ _Table of Contents_
 - [Install Chrome in Ubuntu](#install-chrome-in-ubuntu)
 - [Set the Material You theme](#set-the-material-you-theme)
 - [Must have extensions](#must-have-extensions)
-- [YouTube extensions](#youtube-extensions)
+- [YouTube](#youtube)
+  - [YouTube Video Playback Freezing / UI Deadlocks](#youtube-video-playback-freezing--ui-deadlocks)
+  - [YouTube extensions](#youtube-extensions)
 - [Other useful extensions](#other-useful-extensions)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -96,7 +98,22 @@ See also:
 
 - [Ghostery – Privacy Ad Blocker](https://chrome.google.com/webstore/detail/ghostery-%E2%80%93-privacy-ad-blo/mlomiejdfkolichcflejclcbmpeaniij)
 
-## YouTube extensions
+## YouTube
+
+### YouTube Video Playback Freezing / UI Deadlocks
+
+Random multi-second freezes on YouTube pages occur due to a graphics context presentation deadlock between Windows Multi-Plane Overlays (MPO) and Chrome's default Direct3D 11 ANGLE translation layer. While opening a new window or hitting `Win` + `Ctrl` + `Shift` + `B` temporarily breaks the freeze by forcing an immediate UI redraw, the permanent solution is to bypass this standard D3D11 translation path entirely. Forcing Chromium to utilize the modern, low-overhead Vulkan API backend allows the browser to interact almost natively with the GPU, drastically reducing rendering latency, eliminating the playback deadlocks, and delivering a noticeably snappier UI with instant timeline scrubbing.
+
+1. Fully close Google Chrome.
+2. Right-click your Chrome desktop shortcut and select **Properties**.
+3. Locate the **Target** field, move to the very end (outside the quotation marks), add a space, and append the following flag:
+
+   ```text
+   --use-angle=vulkan
+   ```
+Known Limitations & Caveats: **Slower View Transitions:** Because Vulkan requires an explicit hardware swapchain destruction and reallocation whenever the viewport dimensions change, switching between standard view, Theater Mode (`T`), and Fullscreen (`F`) will experience a slight, fractional-second transition delay compared to the smoother scaling behavior of Direct3D 11.
+
+### YouTube extensions
 
 - [Return YouTube Dislike](https://chromewebstore.google.com/detail/return-youtube-dislike/gebbhagfogifgggkldgodflihgfeippi)
 

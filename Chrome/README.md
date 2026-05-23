@@ -5,6 +5,7 @@ _Table of Contents_
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 <!-- generated with [DocToc](https://github.com/thlorenz/doctoc)* -->
 
+- [Make a Chrome shortcut open the default profile in Windows](#make-a-chrome-shortcut-open-the-default-profile-in-windows)
 - [Export/import search engines](#exportimport-search-engines)
 - [Disable notifications from all sites](#disable-notifications-from-all-sites)
 - [Change Google Chrome cache folder](#change-google-chrome-cache-folder)

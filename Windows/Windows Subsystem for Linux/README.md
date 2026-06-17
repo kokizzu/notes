@@ -28,9 +28,11 @@ WSL2 compared to WSL1 brings increased file system performance, full system call
   - [Docker asking for a password](#docker-asking-for-a-password)
   - [The computer gets stuck at booting](#the-computer-gets-stuck-at-booting)
   - [WSL2 with NTFS is slow](#wsl2-with-ntfs-is-slow)
+- [Zone.Identifier](#zoneidentifier)
 - [Known issues](#known-issues)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 ## Installation
 
@@ -392,6 +394,20 @@ Disable the secure boot in the BIOS
 ### WSL2 with NTFS is slow
 
 In order to benefit from WSL2 performance boost ([very close to native Linux performance](https://vxlabs.com/2019/12/06/wsl2-io-measurements/)), you need to copy and run your application in WSL2's local filesystem (EXT4 on a Hyper-V VHD) - e.g. `/home/`.
+
+## Zone.Identifier
+
+Well known issue since 2019, see [WSL/issues/4609](https://github.com/microsoft/WSL/issues/4609). Thumb up and subscribe to raise its priority.
+
+As workaround, run:
+
+```powershell
+New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\Domains\wsl.localhost" -Force; New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\Domains\wsl.localhost" -Name "*" -Value 1 -PropertyType DWord -Force
+```
+
+Then log out and back in again to ensure the registry changes are applied.
+
+([Source](https://github.com/microsoft/WSL/issues/4609#issuecomment-4698956578)).
 
 ## Known issues
 

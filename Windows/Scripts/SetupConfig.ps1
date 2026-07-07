@@ -96,6 +96,9 @@ Write-Host "*** Warning *** Disabling Accessibility > Visual effects > Animation
 
 # >>> Other Settings >>>
 
+# Disable Alt + Tab showing Edge tabs
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "MultiTaskingAltTabFilter" -Value 3
+
 # Disable Personalization > Start "Show recommended files in Start, recent files in File Explorer, and items in Jump Lists"
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Start_TrackDocs" -Value 0 -Type DWord
 

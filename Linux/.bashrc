@@ -14,16 +14,19 @@ alias grep="grep --ignore-case --color"
 # Identify a zombie process
 alias zombie="ps axo stat,ppid,pid,comm | grep -w defunct"
 
-# Avoid duplicates
-HISTCONTROL=ignoredups:erasedups
+# Skip leading-space commands, ignore consecutive duplicates, and keep only the latest occurrence
+HISTCONTROL=ignorespace:ignoredups:erasedups
+
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
+
 # After each command, append to the history file and reread it
-PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND"$'\n'"}history -a; history -n"
 
 # >>> Prompt renderers
 
 # Option 1: like posh-git
+# Show git branch in prompt with red color
 # https://askubuntu.com/questions/730754/how-do-i-show-the-git-branch-with-colours-in-bash-prompt
 force_color_prompt=yes
 color_prompt=yes

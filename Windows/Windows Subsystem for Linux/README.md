@@ -75,18 +75,6 @@ WSL2 compared to WSL1 brings increased file system performance, full system call
    ```
    (secure access to your WSL shell is already protected by your Windows password)
 
-1. install all the updates:
-
-   ```sh
-   sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo snap refresh
-   ```
-
-1. set your favorite editor as default editor:
-
-   ```sh
-   sudo update-alternatives --config editor
-   ```
-
 1. grant root privileges to your user:
 
    ```sh
@@ -97,6 +85,18 @@ WSL2 compared to WSL1 brings increased file system performance, full system call
 
    ```sh
    <username> ALL=(ALL:ALL)ALL
+   ```
+
+1. install all the updates:
+
+   ```sh
+   sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo snap refresh
+   ```
+
+1. set your favorite editor as default editor:
+
+   ```sh
+   sudo update-alternatives --config editor
    ```
 
 1. if Linux was installed with only the `root` user then in PowerShell run:

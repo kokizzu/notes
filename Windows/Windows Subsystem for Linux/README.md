@@ -50,8 +50,8 @@ WSL2 compared to WSL1 brings increased file system performance, full system call
    # Get the list of available Linux distributions
    wsl.exe --list --online
 
-   # Install your favorite Linux distribution, e.g. Ubuntu 24.04
-   wsl.exe --install Ubuntu-24.04
+   # Install your favorite Linux distribution, e.g. Ubuntu 26.04
+   wsl.exe --install Ubuntu-26.04
    ```
 
 1. In **Turn Windows features on or off** ensure that the following are:
@@ -62,55 +62,32 @@ WSL2 compared to WSL1 brings increased file system performance, full system call
 
 ## Configuration
 
-1. if Linux has been installed with only the `root` user then in WSL run:
+1. In PowerShell, enter the WSL shell as `root` user:
 
-   ```sh
-   sudo adduser <username> 
+   ```powershell
+   wsl -d Ubuntu-26.04 -u root
    ```
 
-1. set an empty password for your WSL user with the following command:
+1. In WSL as root:
 
    ```sh
-   sudo passwd -d <username>
+   update-alternatives --config editor
+   visudo
    ```
-   (secure access to your WSL shell is already protected by your Windows password)
+
+   duplicate the line `root ALL=(ALL:ALL)ALL` and replace `root` with your username.
+
+1. log in WSL as your user, install all the updates and some useful tools:
+
+   ```sh
+   sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo snap refresh; sudo apt install gh zip unzip sshpass rg -y
+   ```
 
 1. select your default editor:
 
    ```sh
-   select-editor
-   ```
-
-1. grant root privileges to your user:
-
-   ```sh
-   sudo visudo
-   ```
-
-   Append after `#User privilege specification`, right below `root`:
-
-   ```sh
-   <username> ALL=(ALL:ALL)ALL
-   ```
-
-1. install all the updates:
-
-   ```sh
-   sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo snap refresh
-   ```
-
-1. set your favorite editor as default editor:
-
-   ```sh
    sudo update-alternatives --config editor
    ```
-
-1. if Linux was installed with only the `root` user then in PowerShell run:
-
-   ```powershell
-   ubuntu2204.exe config --default-user <username>
-   ```
-   (secure access to your WSL shell is already protected by your Windows password)
 
 ## Basic Commands
 

@@ -75,6 +75,12 @@ WSL2 compared to WSL1 brings increased file system performance, full system call
    ```
    (secure access to your WSL shell is already protected by your Windows password)
 
+1. select your default editor:
+
+   ```sh
+   select-editor
+   ```
+
 1. grant root privileges to your user:
 
    ```sh

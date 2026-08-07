@@ -80,7 +80,7 @@ WSL2 compared to WSL1 brings increased file system performance, full system call
 1. log in WSL as your user, install all the updates and some useful tools:
 
    ```sh
-   sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo snap refresh; sudo apt install gh zip unzip sshpass rg -y
+   sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo snap refresh; sudo apt install gh zip unzip sshpass ripgrep -y
    ```
 
 1. select your default editor:

@@ -28,6 +28,7 @@ WSL2 compared to WSL1 brings increased file system performance, full system call
   - [Docker asking for a password](#docker-asking-for-a-password)
   - [The computer gets stuck at booting](#the-computer-gets-stuck-at-booting)
   - [WSL2 with NTFS is slow](#wsl2-with-ntfs-is-slow)
+  - [Hosts file reset on every restart](#hosts-file-reset-on-every-restart)
 - [Zone.Identifier](#zoneidentifier)
 - [Known issues](#known-issues)
 
@@ -377,6 +378,15 @@ Disable the secure boot in the BIOS
 ### WSL2 with NTFS is slow
 
 In order to benefit from WSL2 performance boost ([very close to native Linux performance](https://vxlabs.com/2019/12/06/wsl2-io-measurements/)), you need to copy and run your application in WSL2's local filesystem (EXT4 on a Hyper-V VHD) - e.g. `/home/`.
+
+### Hosts file reset on every restart
+
+WSL regenerates `/etc/hosts` on every restart, discarding any manual edits (e.g. entries needed to resolve a service like Kafka running in WSL). Fix it by adding a boot command in `/etc/wsl.conf` that re-adds the entry idempotently:
+
+```ini
+[boot]
+command = "grep -q '127.0.0.1 kafka' /etc/hosts || echo '127.0.0.1 kafka' >> /etc/hosts"
+```
 
 ## Zone.Identifier
 

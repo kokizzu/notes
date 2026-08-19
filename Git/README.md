@@ -102,7 +102,7 @@ To keep the repository clean use _rebase_:
 
 or add an alias to your `~/.gitconfig`, for example:
 
-```sh
+```ini
 [alias]
     update = pull --rebase
 ```
